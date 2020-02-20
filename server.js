@@ -89,24 +89,6 @@ app.post('/postData', (req, res) => {
 
 });
 
-let transporter = nodemailer.createTransport({
-    service: 'gmail',
-    host: 'smtp.gmail.com',  
-    auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASSWORD
-    }
-});
-
-
-mailOptions = {
-  from: user,
-  to: 'dayvonallen2017@gmail.com',
-  subject: `${finalName}, we've received your message`,
-  text: `${finalName}, thank you for reaching out to us. We will respond soon.`
-}
-
-
 //runs server
 app.listen(PORT, () => {
   console.log(`Now listening on port ${PORT}`)

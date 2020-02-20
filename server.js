@@ -31,7 +31,7 @@ app.post('/postData', (req, res) => {
   let data = req.body
   name = data.name;
   email = data.email;
-  message = data.message;
+  details = data.details;
   inquiry = data.inquiry;
 
   //format string for display purposes
@@ -62,7 +62,7 @@ app.post('/postData', (req, res) => {
     from: user,
     to: user,
     subject: `An inquiry has been made!`,
-    text: `Name: ${name}\nEmail: ${email}\nInquiry: ${inquiry}\nDetails: ${message}`
+    text: `Name: ${name}\nEmail: ${email}\nInquiry: ${inquiry}\nDetails: ${details}`
   }
 
   //sends email to the customer

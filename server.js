@@ -8,15 +8,15 @@ require('dotenv').config();
 let user = process.env.EMAIL;
 let name = "";
 let email = "";
-let message = "";
-let phone = "";
+let details = "";
+let inquiry = "";
 let formattedName = "";
 let finalName = "";
 let mailOptions = {};
 let mailOptions2 = {};
 
 //port
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5500;
 
 //initialize expree
 const app = express();
@@ -32,7 +32,7 @@ app.post('/postData', (req, res) => {
   name = data.name;
   email = data.email;
   message = data.message;
-  phone = data.phone;
+  inquiry = data.inquiry;
 
   //format string for display purposes
   formattedName = name.split(' ')[0];
@@ -40,12 +40,11 @@ app.post('/postData', (req, res) => {
 
   //transporter for node mailer
   let transporter = nodemailer.createTransport({
-    host: 'dnadevelopers.live',
-    port: 465,
-    secure: true,
+    service: 'gmail',
+    host: 'smtp.gmail.com',    
     auth: {
-      user: user,
-      pass: process.env.PASSWORD
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD
     }
   });
 
@@ -63,7 +62,7 @@ app.post('/postData', (req, res) => {
     from: user,
     to: user,
     subject: `An inquiry has been made!`,
-    text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nMessage: ${message}`
+    text: `Name: ${name}\nEmail: ${email}\nInquiry: ${inquiry}\nDetails: ${message}`
   }
 
   //sends email to the customer
@@ -91,32 +90,22 @@ app.post('/postData', (req, res) => {
 });
 
 let transporter = nodemailer.createTransport({
-  host: 'dnadevelopers.live',
-  port: 465,
-  secure: true,
-  auth: {
-    user: user,
-    pass: process.env.PASSWORD
-  }
+    service: 'gmail',
+    host: 'smtp.gmail.com',  
+    auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD
+    }
 });
 
 
 mailOptions = {
   from: user,
-  to: 'test@gmail.com',
+  to: 'dayvonallen2017@gmail.com',
   subject: `${finalName}, we've received your message`,
   text: `${finalName}, thank you for reaching out to us. We will respond soon.`
 }
 
-
-transporter.sendMail(mailOptions, (err, data) => {
-  if (err) {
-    console.log(err + ' \nAn error has occurred')
-
-  } else {
-    console.log('Successfully sent email!')
-  }
-});
 
 //runs server
 app.listen(PORT, () => {
